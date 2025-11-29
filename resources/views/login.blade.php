@@ -17,7 +17,7 @@
 
             <div class="flex-1 hidden lg:flex">
                 <div class="flex items-center justify-center w-full h-full">
-                    <img src="/img/register.jpg" alt="Register" class="object-contain w-full h-full" />
+                    <img src="/img/login.jpg" alt="Register" class="object-contain w-full h-full" />
                 </div>
             </div>
 
@@ -45,41 +45,11 @@
                         {{ session('success') }}
                     </div>
                 @endif
-
+                <h2 class="mt-10 mb-3 text-lg font-semibold text-gray-700">Please login to enter the system</h2>
                 <form method="POST" action="{{ route('register.process') }}">
                     @csrf
 
-                    <h2 class="mb-3 text-lg font-semibold text-gray-700">Select Your Role</h2>
-
-                    <div class="flex gap-4">
-
-
-                        <label
-                            class="flex flex-col items-center justify-center w-32 h-24 transition bg-gray-200 cursor-pointer role-box rounded-xl hover:bg-gray-300">
-                            <i class="text-3xl text-gray-700 fa-solid fa-user-doctor"></i>
-                            <input type="radio" name="role" value="dokter" class="hidden role-radio">
-                            <span class="mt-1 text-sm font-medium">Doctor</span>
-                        </label>
-
-                        <label
-                            class="flex flex-col items-center justify-center w-32 h-24 transition bg-gray-200 cursor-pointer role-box rounded-xl hover:bg-gray-300">
-                            <i class="text-3xl text-gray-700 fa-solid fa-user-nurse"></i>
-                            <input type="radio" name="role" value="perawat" class="hidden role-radio">
-                            <span class="mt-1 text-sm font-medium">Nurse</span>
-                        </label>
-
-
-                        <label
-                            class="flex flex-col items-center justify-center w-32 h-24 transition bg-gray-200 cursor-pointer role-box rounded-xl hover:bg-gray-300">
-                            <i class="text-3xl text-gray-700 fa-solid fa-user-gear"></i>
-                            <input type="radio" name="role" value="admin" class="hidden role-radio">
-                            <span class="mt-1 text-sm font-medium">Admin</span>
-                        </label>
-
-                    </div>
-
-
-                    <label class="block mt-6 text-sm font-semibold text-gray-700">Name</label>
+                    <label class="block mt-8 text-sm font-semibold text-gray-700">Name</label>
                     <input name="nama" required
                         class="w-full px-4 py-3 mb-3 bg-gray-100 border border-gray-300 rounded-lg" type="text"
                         placeholder="Enter your name" />
@@ -91,9 +61,22 @@
                         placeholder="Enter your password" />
 
 
+                    <!-- REMEMBER ME + FORGOT PASSWORD -->
+                    <div class="flex items-center justify-between mt-2 mb-4">
+                        <label class="flex items-center gap-2 text-sm text-gray-700">
+                            <input type="checkbox" name="remember"
+                                class="w-4 h-4 text-indigo-600 border-gray-300 rounded" />
+                            Remember Me
+                        </label>
 
+                        {{-- <a href="{{ route('password.request') }}"
+                            class="text-sm font-semibold text-indigo-600 hover:underline">
+                            Forgot Password?
+                        </a> --}}
+                        <h1>Forgot Password?</h1>
+                    </div>
                     <button type="submit"
-                        class="flex items-center justify-center w-full py-4 mt-4 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">
+                        class="flex items-center justify-center w-full py-4 mt-8 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">
                         Sign Up
                     </button>
                 </form>

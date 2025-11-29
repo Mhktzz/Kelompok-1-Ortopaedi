@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Registrasi</title>
+    <title>Login</title>
     @vite('resources/css/app.css')
 
 

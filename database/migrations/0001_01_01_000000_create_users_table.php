@@ -21,7 +21,7 @@ return new class extends Migration
                 'pendaftaran',
                 'perawat',
                 'dokter',
-                'apoteker'
+                'apoteker',
             ]);
 
             $table->string('spesialisasi')->nullable();

@@ -28,9 +28,15 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // // Relasi: Dokter memiliki banyak rekam medis
-    // public function rekamMedis()
-    // {
-    //     return $this->hasMany(RekamMedis::class, 'dokter_id');
-    // }
+    // Dokter → banyak rekam medis
+    public function medicalRecords()
+    {
+        return $this->hasMany(MedicalRecord::class, 'doctor_id');
+    }
+
+    // Dokter → banyak resep
+    public function prescriptions()
+    {
+        return $this->hasMany(Prescription::class, 'dokter_id');
+    }
 }

@@ -11,22 +11,21 @@ return new class extends Migration
         Schema::create('medical_records', function (Blueprint $table) {
             $table->id();
 
-            // Relasi
             $table->foreignId('patient_id')
-                  ->constrained('patients')
-                  ->cascadeOnDelete();
+                ->constrained('patients')
+                ->cascadeOnDelete();
 
             $table->foreignId('doctor_id')
-                  ->constrained('users')
-                  ->cascadeOnDelete();
+                ->constrained('users')
+                ->cascadeOnDelete();
 
-            // Data rekam medis
             $table->date('tanggal_kunjungan');
             $table->text('keluhan_utama')->nullable();
             $table->text('diagnosa')->nullable();
             $table->text('tindakan')->nullable();
+
             $table->enum('status', ['lengkap', 'belum_lengkap'])
-                  ->default('belum_lengkap');
+                ->default('belum_lengkap');
 
             $table->timestamps();
         });

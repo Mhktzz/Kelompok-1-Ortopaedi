@@ -10,12 +10,15 @@ return new class extends Migration
     {
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId('medical_record_id')
-                  ->constrained('medical_records')
-                  ->cascadeOnDelete();
+                ->constrained('medical_records')
+                ->cascadeOnDelete();
+
             $table->foreignId('dokter_id')
-                  ->constrained('users')
-                  ->cascadeOnDelete();
+                ->constrained('users')
+                ->cascadeOnDelete();
+
             $table->timestamps();
         });
     }

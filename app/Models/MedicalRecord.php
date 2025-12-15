@@ -28,4 +28,16 @@ class MedicalRecord extends Model
     {
         return $this->belongsTo(User::class, 'doctor_id');
     }
+
+    // Rekam medis → 1 vital sign
+    public function vitalSign()
+    {
+        return $this->hasOne(VitalSign::class);
+    }
+
+    // Rekam medis → banyak resep
+    public function prescriptions()
+    {
+        return $this->hasMany(Prescription::class);
+    }
 }

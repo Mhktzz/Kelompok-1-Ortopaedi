@@ -10,14 +10,21 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 100);
-            $table->string('email', 100)->unique();
+            $table->string('name');
+            $table->string('username')->unique();
+            $table->string('email')->unique();
             $table->string('password');
 
-            $table->enum('role', ['dokter', 'perawat', 'admin']);
+            $table->enum('role', [
+                'super_admin',
+                'manajer',
+                'pendaftaran',
+                'perawat',
+                'dokter',
+                'apoteker'
+            ]);
 
-            $table->string('spesialisasi', 100)->nullable();
-            $table->string('nomor_pegawai', 50)->nullable()->unique();
+            $table->string('spesialisasi')->nullable();
 
             $table->rememberToken();
             $table->timestamps();
@@ -41,8 +48,8 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('users');
     }
 };

@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body class="bg-[#FFC107]">
+<body class="bg-[#519D9E]">
 
     <div class="flex min-h-screen text-gray-900">
-        <div class="flex flex-1 max-w-screen-xl m-0 bg-white shadow sm:m-10 sm:rounded-lg">
+        <div class="flex flex-1 max-w-screen-xl m-0 bg-[#F3F5F6] shadow sm:m-10 sm:rounded-lg">
 
             <div class="flex-1 hidden lg:flex">
                 <div class="flex items-center justify-center w-full h-full">
@@ -25,7 +25,7 @@
             <div class="p-6 lg:w-1/2 xl:w-5/12 sm:p-12">
 
                 <div class="mb-6">
-                    <img src="/img/rsop_logo.png" class="w-20 mx-auto" />
+                    <img src="/img/victorylogo.png" class="w-20 mx-auto" />
                 </div>
 
 
@@ -46,22 +46,22 @@
                     </div>
                 @endif
                 <h2 class="mt-10 mb-3 text-lg font-semibold text-gray-700">Please login to enter the system</h2>
-                <form method="POST" action="{{ route('register.process') }}">
+                <form method="POST" action="{{ route('login.process') }}">
                     @csrf
 
-                    <label class="block mt-8 text-sm font-semibold text-gray-700">Name</label>
-                    <input name="nama" required
-                        class="w-full px-4 py-3 mb-3 bg-gray-100 border border-gray-300 rounded-lg" type="text"
-                        placeholder="Enter your name" />
+                    {{-- EMAIL --}}
+                    <label class="block mt-8 text-sm font-semibold text-gray-700">Email</label>
+                    <input type="email" name="email" required
+                        class="w-full px-4 py-3 mb-3 bg-gray-100 border border-gray-300 rounded-lg"
+                        placeholder="Enter your email" />
 
-
+                    {{-- PASSWORD --}}
                     <label class="block mb-1 text-sm font-semibold text-gray-700">Password</label>
-                    <input name="password" required
-                        class="w-full px-4 py-3 mb-3 bg-gray-100 border border-gray-300 rounded-lg" type="password"
+                    <input type="password" name="password" required
+                        class="w-full px-4 py-3 mb-3 bg-gray-100 border border-gray-300 rounded-lg"
                         placeholder="Enter your password" />
 
-
-                    <!-- REMEMBER ME + FORGOT PASSWORD -->
+                    {{-- REMEMBER ME --}}
                     <div class="flex items-center justify-between mt-2 mb-4">
                         <label class="flex items-center gap-2 text-sm text-gray-700">
                             <input type="checkbox" name="remember"
@@ -69,24 +69,17 @@
                             Remember Me
                         </label>
 
-                        {{-- <a href="{{ route('password.request') }}"
-                            class="text-sm font-semibold text-indigo-600 hover:underline">
-                            Forgot Password?
-                        </a> --}}
-                        <h1>Forgot Password?</h1>
+                        <span class="text-sm text-gray-500">Forgot Password?</span>
                     </div>
+
+                    {{-- BUTTON --}}
                     <button type="submit"
                         class="flex items-center justify-center w-full py-4 mt-8 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">
-                        Sign Up
+                        Login
                     </button>
                 </form>
 
-                <p class="mt-6 text-sm text-center text-gray-600">
-                    Already have an account?
-                    <a href="{{ route('register') }}" class="font-semibold text-indigo-600 hover:underline">
-                        Register
-                    </a>
-                </p>
+
 
             </div>
         </div>

@@ -9,27 +9,32 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Create default admin
+        // Super Admin
         User::create([
-            'nama' => 'Admin Utama',
+            'name' => 'Admin Utama',
+            'username' => 'superadmin',
             'email' => 'admin@example.com',
-            'password' => 'admin',
-            'role' => 'admin',
+            'password' => 'admin123',
+            'role' => 'super_admin',
             'spesialisasi' => null,
         ]);
 
+        // Dokter
         User::create([
-            'nama' => 'Dr. Budi',
+            'name' => 'Dr. Budi',
+            'username' => 'drbudi',
             'email' => 'dokter@example.com',
-            'password' => 'dokter_budi',
+            'password' => 'dokter123',
             'role' => 'dokter',
-            'spesialisasi' => 'Poli_Umum',
+            'spesialisasi' => 'Poli Umum',
         ]);
 
+        // Perawat
         User::create([
-            'nama' => 'Siti_Perawat',
+            'name' => 'Siti',
+            'username' => 'siti_perawat',
             'email' => 'perawat@example.com',
-            'password' => 'Siticuy',
+            'password' => 'perawat123',
             'role' => 'perawat',
             'spesialisasi' => null,
         ]);

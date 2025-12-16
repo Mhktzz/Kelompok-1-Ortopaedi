@@ -25,6 +25,14 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
     })->name('dashboard.superadmin.kelolauser');
 });
 
+    Route::get('/dashboard/superadmin/rekam-medis', function () {
+    return view('dashboard.superadmin.rekammedis');
+})->name('dashboard.superadmin.rekammedis');
+
+Route::get('/dashboard/superadmin/data-pasien', function () {
+    return view('dashboard.superadmin.datapasien');
+})->name('dashboard.superadmin.datapasien');
+
 Route::middleware(['auth', 'role:manajer'])->group(function () {
     Route::get('/dashboard/manajer', function () {
         return view('dashboard.manajer.index');

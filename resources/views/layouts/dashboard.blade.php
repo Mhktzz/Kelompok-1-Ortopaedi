@@ -85,13 +85,13 @@
 
                 {{-- ================= PENDAFTARAN ================= --}}
                 @if (auth()->user()->role === 'pendaftaran')
-                    <a href="{{ route('dashboard.pendaftaran') }}"
+                    <a href="{{ route('dashboard.pendaftaran.patient') }}"
                         class="flex items-center px-4 py-3 rounded-lg hover:bg-white/20">
                         <i class="mr-3 fas fa-home"></i> Dashboard
                     </a>
 
-                    <a href="#" class="flex items-center px-4 py-3 rounded-lg hover:bg-white/20">
-                        <i class="mr-3 fas fa-user-plus"></i> Manajemen Pasien
+                    <a href="{{ route('dashboard.pendaftaran.reservasi.index') }}" class="flex items-center px-4 py-3 rounded-lg hover:bg-white/20">
+                        <i class="mr-3 fas fa-user-plus"></i> Reservasi
                     </a>
                 @endif
 

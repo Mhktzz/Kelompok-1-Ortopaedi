@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MedicineController;
 
 /* LANDING */
 
@@ -31,6 +32,30 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
     Route::get('/dashboard/superadmin/data-pasien', function () {
         return view('dashboard.superadmin.datapasien');
     })->name('dashboard.superadmin.datapasien');
+    
+    Route::get('/dashboard/superadmin/obat',
+        [MedicineController::class, 'index']
+    )->name('superadmin.obat.index');
+
+    Route::get('/dashboard/superadmin/obat/create',
+        [MedicineController::class, 'create']
+    )->name('superadmin.obat.create');
+
+    Route::post('/dashboard/superadmin/obat',
+        [MedicineController::class, 'store']
+    )->name('superadmin.obat.store');
+
+    Route::get('/dashboard/superadmin/obat/{medicine}/edit',
+        [MedicineController::class, 'edit']
+    )->name('superadmin.obat.edit');
+
+    Route::put('/dashboard/superadmin/obat/{medicine}',
+        [MedicineController::class, 'update']
+    )->name('superadmin.obat.update');
+
+    Route::delete('/dashboard/superadmin/obat/{medicine}',
+        [MedicineController::class, 'destroy']
+    )->name('superadmin.obat.destroy');
 });
 
 

@@ -5,15 +5,13 @@
 
 @section('content')
 
-    {{-- BACKDROP --}}
     <div class="fixed inset-0 z-40 bg-opacity-40"></div>
 
-    {{-- MODAL --}}
+
     <div class="fixed inset-0 z-50 flex items-center justify-center">
 
         <div class="w-full max-w-lg bg-white shadow-lg rounded-xl">
 
-            {{-- HEADER --}}
             <div class="flex items-center justify-between px-6 py-4 border-b">
                 <h2 class="text-lg font-semibold text-gray-800">
                     Detail ICD-10
@@ -24,10 +22,8 @@
                 </a>
             </div>
 
-            {{-- BODY --}}
             <div class="px-6 py-4 space-y-4">
 
-                {{-- KODE ICD --}}
                 <div>
                     <label class="block mb-1 text-sm font-medium text-gray-700">
                         Kode ICD-10
@@ -45,7 +41,6 @@
                         value="{{ $icd10->nama_penyakit }}" disabled>
                 </div>
 
-                {{-- KATEGORI --}}
                 <div>
                     <label class="block mb-1 text-sm font-medium text-gray-700">
                         Kategori
@@ -56,7 +51,7 @@
 
             </div>
 
-            {{-- FOOTER --}}
+
             <div class="flex justify-end gap-3 px-6 py-4 border-t">
                 <a href="{{ route('dashboard.superadmin.icd10.index') }}"
                     class="px-4 py-2 text-sm text-gray-700 border rounded-lg hover:bg-gray-100">

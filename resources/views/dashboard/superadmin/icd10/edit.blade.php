@@ -5,15 +5,13 @@
 
 @section('content')
 
-    {{-- BACKDROP --}}
-    <div class="fixed inset-0 z-40 bg-black bg-opacity-40"></div>
 
-    {{-- MODAL --}}
+    <div class="fixed inset-0 z-40 bg-opacity-40"></div>
+
     <div class="fixed inset-0 z-50 flex items-center justify-center">
 
         <div class="w-full max-w-lg bg-white shadow-lg rounded-xl">
 
-            {{-- HEADER --}}
             <div class="flex items-center justify-between px-6 py-4 border-b">
                 <h2 class="text-lg font-semibold text-gray-800">
                     Edit Data ICD-10
@@ -24,14 +22,14 @@
                 </a>
             </div>
 
-            {{-- FORM --}}
+
             <form action="{{ route('dashboard.superadmin.icd10.update', $icd10->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
                 <div class="px-6 py-4 space-y-4">
 
-                    {{-- KODE ICD --}}
+
                     <div>
                         <label class="block mb-1 text-sm font-medium text-gray-700">
                             Kode ICD-10
@@ -44,7 +42,6 @@
                         @enderror
                     </div>
 
-                    {{-- NAMA PENYAKIT --}}
                     <div>
                         <label class="block mb-1 text-sm font-medium text-gray-700">
                             Nama Penyakit
@@ -57,18 +54,53 @@
                         @enderror
                     </div>
 
-                    {{-- KATEGORI --}}
-                    <div>
-                        <label class="block mb-1 text-sm font-medium text-gray-700">
-                            Kategori
-                        </label>
-                        <input type="text" name="kategori"
-                            class="w-full px-4 py-2 text-sm border rounded-lg focus:ring focus:ring-teal-200"
-                            value="{{ old('kategori', $icd10->kategori) }}" required>
-                        @error('kategori')
-                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    <select name="kategori"
+                        class="w-full px-4 py-2 text-sm border rounded-lg focus:ring focus:ring-teal-200" required>
+
+                        <option value="">-- Pilih Kategori --</option>
+
+                        <option value="penyakit_gigi"
+                            {{ old('kategori', $icd10->kategori) == 'penyakit_gigi' ? 'selected' : '' }}>
+                            Penyakit Gigi
+                        </option>
+
+                        <option value="penyakit_umum"
+                            {{ old('kategori', $icd10->kategori) == 'penyakit_umum' ? 'selected' : '' }}>
+                            Penyakit Umum
+                        </option>
+
+                        <option value="gangguan_muskuloskeletal"
+                            {{ old('kategori', $icd10->kategori) == 'gangguan_muskuloskeletal' ? 'selected' : '' }}>
+                            Gangguan Muskuloskeletal
+                        </option>
+
+                        <option value="cedera_dan_trauma"
+                            {{ old('kategori', $icd10->kategori) == 'cedera_dan_trauma' ? 'selected' : '' }}>
+                            Cedera dan Trauma
+                        </option>
+
+                        <option value="penyakit_anak"
+                            {{ old('kategori', $icd10->kategori) == 'penyakit_anak' ? 'selected' : '' }}>
+                            Penyakit Anak
+                        </option>
+
+                        <option value="kondisi_perinatal"
+                            {{ old('kategori', $icd10->kategori) == 'kondisi_perinatal' ? 'selected' : '' }}>
+                            Kondisi Perinatal
+                        </option>
+
+                        <option value="kelainan_bawaan"
+                            {{ old('kategori', $icd10->kategori) == 'kelainan_bawaan' ? 'selected' : '' }}>
+                            Kelainan Bawaan
+                        </option>
+
+                        <option value="gangguan_nutrisi_anak"
+                            {{ old('kategori', $icd10->kategori) == 'gangguan_nutrisi_anak' ? 'selected' : '' }}>
+                            Gangguan Nutrisi Anak
+                        </option>
+
+                    </select>
+
 
                 </div>
 

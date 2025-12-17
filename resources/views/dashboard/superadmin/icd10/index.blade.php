@@ -72,15 +72,17 @@
 
 
                                 <form action="{{ route('dashboard.superadmin.icd10.destroy', $item->id) }}" method="POST"
-                                    class="inline">
+                                    class="inline delete-form">
                                     @csrf
                                     @method('DELETE')
 
-                                    <button onclick="return confirm('Yakin ingin menghapus data ICD-10 ini?')"
-                                        class="p-2 text-white bg-pink-600 rounded-lg hover:bg-pink-700" title="Hapus">
+                                    <button type="button"
+                                        class="p-2 text-white bg-pink-600 rounded-lg hover:bg-pink-700 btn-delete"
+                                        data-kode="{{ $item->kode }}">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
+
 
                             </td>
                         </tr>
@@ -99,3 +101,32 @@
     </div>
 
 @endsection
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.btn-delete').forEach(button => {
+            button.addEventListener('click', function() {
+                const form = this.closest('form');
+                const kode = this.dataset.kode;
+
+                Swal.fire({
+                    title: 'Konfirmasi',
+                    text: `Apakah Anda yakin ingin menghapus ICD-10 (${kode})?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Tidak',
+                    reverseButtons: true,
+                    customClass: {
+                        confirmButton: 'bg-teal-500 text-white px-4 py-2 rounded-lg',
+                        cancelButton: 'bg-red-500 text-white px-4 py-2 rounded-lg'
+                    },
+                    buttonsStyling: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+</script>

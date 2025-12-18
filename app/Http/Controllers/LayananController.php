@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Layanan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LayananController extends Controller
 {
+    /* =========================
+     |  MANAJER
+     ========================= */
     public function indexManajer()
     {
         $layanan = Layanan::latest()->get();
@@ -17,14 +21,24 @@ class LayananController extends Controller
     {
         return view('dashboard.manajer.layanan.show', compact('layanan'));
     }
-    // INDEX
-    public function index()
+
+    /* =========================
+     |  SUPER ADMIN
+     ========================= */
+    public function indexSuperadmin()
     {
         $layanan = Layanan::latest()->get();
-        return view('dashboard.manajer.layanan.index', compact('layanan'));
+        return view('dashboard.superadmin.layanan.index', compact('layanan'));
     }
 
-    // CREATE
+    public function showSuperadmin(Layanan $layanan)
+    {
+        return view('dashboard.superadmin.layanan.show', compact('layanan'));
+    }
+
+    /* =========================
+     |  SHARED
+     ========================= */
     public function create()
     {
         $kategoriList = [
@@ -35,10 +49,19 @@ class LayananController extends Controller
             'Lainnya',
         ];
 
-        return view('dashboard.manajer.layanan.create', compact('kategoriList'));
+        $role = Auth::user()->role;
+
+        if ($role === 'super_admin') {
+            return view('dashboard.superadmin.layanan.create', compact('kategoriList'));
+        }
+
+        if ($role === 'manajer') {
+            return view('dashboard.manajer.layanan.create', compact('kategoriList'));
+        }
+
+        abort(403);
     }
 
-    // STORE (ADD)
     public function store(Request $request)
     {
         $request->validate([
@@ -50,27 +73,24 @@ class LayananController extends Controller
 
         Layanan::create($request->all());
 
-        return redirect()
-            ->route('dashboard.manajer.layanan.index')
-            ->with('success', 'Layanan berhasil ditambahkan');
+        $role = Auth::user()->role;
+
+        if ($role === 'super_admin') {
+            return redirect()
+                ->route('dashboard.superadmin.layanan.index')
+                ->with('success', 'Layanan berhasil ditambahkan');
+        }
+
+        if ($role === 'manajer') {
+            return redirect()
+                ->route('dashboard.manajer.layanan.index')
+                ->with('success', 'Layanan berhasil ditambahkan');
+        }
+
+        abort(403);
     }
 
-    // VIEW
-    public function show(Layanan $layanan)
-    {
-        return view('dashboard.manajer.layanan.show', compact('layanan'));
-    }
 
-    // DELETE
-    public function destroy(Layanan $layanan)
-    {
-        $layanan->delete();
-
-        return redirect()
-            ->route('dashboard.manajer.layanan.index')
-            ->with('success', 'Layanan berhasil dihapus');
-    }
-    // EDIT
     public function edit(Layanan $layanan)
     {
         $kategoriList = [
@@ -81,10 +101,26 @@ class LayananController extends Controller
             'Lainnya',
         ];
 
-        return view('dashboard.manajer.layanan.edit', compact('layanan', 'kategoriList'));
+        $role = Auth::user()->role;
+
+        if ($role === 'super_admin') {
+            return view(
+                'dashboard.superadmin.layanan.edit',
+                compact('layanan', 'kategoriList')
+            );
+        }
+
+        if ($role === 'manajer') {
+            return view(
+                'dashboard.manajer.layanan.edit',
+                compact('layanan', 'kategoriList')
+            );
+        }
+
+        abort(403);
     }
 
-    // UPDATE
+
     public function update(Request $request, Layanan $layanan)
     {
         $request->validate([
@@ -96,8 +132,28 @@ class LayananController extends Controller
 
         $layanan->update($request->all());
 
-        return redirect()
-            ->route('dashboard.manajer.layanan.index')
-            ->with('success', 'Layanan berhasil diperbarui');
+        $role = Auth::user()->role;
+
+        if ($role === 'super_admin') {
+            return redirect()
+                ->route('dashboard.superadmin.layanan.index')
+                ->with('success', 'Layanan berhasil diperbarui');
+        }
+
+        if ($role === 'manajer') {
+            return redirect()
+                ->route('dashboard.manajer.layanan.index')
+                ->with('success', 'Layanan berhasil diperbarui');
+        }
+
+        abort(403);
+    }
+
+
+    public function destroy(Layanan $layanan)
+    {
+        $layanan->delete();
+
+        return redirect()->back()->with('success', 'Layanan berhasil dihapus');
     }
 }

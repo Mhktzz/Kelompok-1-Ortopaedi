@@ -60,7 +60,8 @@
                         <i class="mr-3 fas fa-pills"></i> Data Obat
                     </a>
 
-                    <a href="#" class="flex items-center px-4 py-3 rounded-lg hover:bg-white/20">
+                    <a href="{{ route('dashboard.superadmin.layanan.index') }}"
+                        class="flex items-center px-4 py-3 rounded-lg hover:bg-white/20">
                         <i class="mr-3 fas fa-stethoscope"></i> Data Layanan
                     </a>
 

@@ -141,6 +141,40 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
         '/dashboard/superadmin/master-icd10/{icd10}',
         [Icd10Controller::class, 'destroy']
     )->name('dashboard.superadmin.icd10.destroy');
+    Route::get(
+        '/dashboard/superadmin/layanan',
+        [LayananController::class, 'indexSuperadmin']
+    )->name('dashboard.superadmin.layanan.index');
+
+    Route::get(
+        '/dashboard/superadmin/layanan/create',
+        [LayananController::class, 'create']
+    )->name('dashboard.superadmin.layanan.create');
+
+    Route::post(
+        '/dashboard/superadmin/layanan',
+        [LayananController::class, 'store']
+    )->name('dashboard.superadmin.layanan.store');
+
+    Route::get(
+        '/dashboard/superadmin/layanan/{layanan}',
+        [LayananController::class, 'showSuperadmin']
+    )->name('dashboard.superadmin.layanan.show');
+
+    Route::get(
+        '/dashboard/superadmin/layanan/{layanan}/edit',
+        [LayananController::class, 'edit']
+    )->name('dashboard.superadmin.layanan.edit');
+
+    Route::put(
+        '/dashboard/superadmin/layanan/{layanan}',
+        [LayananController::class, 'update']
+    )->name('dashboard.superadmin.layanan.update');
+
+    Route::delete(
+        '/dashboard/superadmin/layanan/{layanan}',
+        [LayananController::class, 'destroy']
+    )->name('dashboard.superadmin.layanan.destroy');
 });
 
 

@@ -7,6 +7,9 @@ use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\Icd10Controller;
 use App\Http\Controllers\reservationController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\LayananController;
+use App\Http\Controllers\PerformadokterController;
+
 Route::get('/', function () {
     return view('landingpage');
 })->name('landing');
@@ -98,7 +101,8 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
         [MedicineController::class, 'destroy']
     )->name('superadmin.obat.destroy');
 
-     Route::get('/dashboard/superadmin/obat/stok',
+    Route::get(
+        '/dashboard/superadmin/obat/stok',
         [MedicineController::class, 'stok']
     )->name('superadmin.obat.stok');
 
@@ -141,14 +145,56 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
 
 
 Route::middleware(['auth', 'role:manajer'])->group(function () {
+
     Route::get('/dashboard/manajer', function () {
         return view('dashboard.manajer.index');
     })->name('dashboard.manajer');
+
+    Route::get('/dashboard/manajer/datapasien', [PatientController::class, 'indexManajer'])->name('dashboard.manajer.datapasien.index');
+
+    Route::get(
+        '/dashboard/manajer/layanan',
+        [LayananController::class, 'indexManajer']
+    )->name('dashboard.manajer.layanan.index');
+
+    Route::get(
+        '/dashboard/manajer/layanan/create',
+        [LayananController::class, 'create']
+    )->name('dashboard.manajer.layanan.create');
+
+    Route::post(
+        '/dashboard/manajer/layanan',
+        [LayananController::class, 'store']
+    )->name('dashboard.manajer.layanan.store');
+
+    Route::get(
+        '/dashboard/manajer/layanan/{layanan}',
+        [LayananController::class, 'showManajer']
+    )->name('dashboard.manajer.layanan.show');
+
+    Route::get(
+        '/dashboard/manajer/layanan/{layanan}/edit',
+        [LayananController::class, 'edit']
+    )->name('dashboard.manajer.layanan.edit');
+
+
+    Route::put(
+        '/dashboard/manajer/layanan/{layanan}',
+        [LayananController::class, 'update']
+    )->name('dashboard.manajer.layanan.update');
+
+    Route::delete(
+        '/dashboard/manajer/layanan/{layanan}',
+        [LayananController::class, 'destroy']
+    )->name('dashboard.manajer.layanan.destroy');
+    Route::get('/dashboard/manajer/performadokter', [PerformadokterController::class, 'index'])->name('dashboard.manajer.performadokter.index');
 });
+
+
 
 Route::middleware(['auth', 'role:pendaftaran'])->group(function () {
 
-       // INDEX
+    // INDEX
     Route::get(
         '/dashboard/pendaftaran/reservasi/index',
         [ReservationController::class, 'index']
@@ -190,9 +236,8 @@ Route::middleware(['auth', 'role:pendaftaran'])->group(function () {
         [ReservationController::class, 'destroy']
     )->name('dashboard.pendaftaran.reservasi.destroy');
 
-        Route::get('/patient', [PatientController::class, 'index'])
-            ->name('dashboard.pendaftaran.patient');
-
+    Route::get('/patient', [PatientController::class, 'index'])
+        ->name('dashboard.pendaftaran.patient');
 });
 
 

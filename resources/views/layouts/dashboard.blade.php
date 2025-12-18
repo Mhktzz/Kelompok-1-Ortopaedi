@@ -8,6 +8,7 @@
     @vite('resources/css/app.css')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
@@ -75,15 +76,18 @@
                         <i class="mr-3 fas fa-home"></i> Dashboard
                     </a>
 
-                    <a href="#" class="flex items-center px-4 py-3 rounded-lg hover:bg-white/20">
+                    <a href="{{ route('dashboard.manajer.datapasien.index') }}"
+                        class="flex items-center px-4 py-3 rounded-lg hover:bg-white/20">
                         <i class="mr-3 fas fa-user-injured"></i> Data Pasien
                     </a>
 
-                    <a href="#" class="flex items-center px-4 py-3 rounded-lg hover:bg-white/20">
+                    <a href="{{ route('dashboard.manajer.layanan.index') }}"
+                        class="flex items-center px-4 py-3 rounded-lg hover:bg-white/20">
                         <i class="mr-3 fas fa-stethoscope"></i> Layanan
                     </a>
 
-                    <a href="#" class="flex items-center px-4 py-3 rounded-lg hover:bg-white/20">
+                    <a href="{{ route('dashboard.manajer.performadokter.index') }}"
+                        class="flex items-center px-4 py-3 rounded-lg hover:bg-white/20">
                         <i class="mr-3 fas fa-chart-line"></i> Performa Dokter
                     </a>
                 @endif
@@ -95,7 +99,8 @@
                         <i class="mr-3 fas fa-home"></i> Dashboard
                     </a>
 
-                    <a href="{{ route('dashboard.pendaftaran.reservasi.index') }}" class="flex items-center px-4 py-3 rounded-lg hover:bg-white/20">
+                    <a href="{{ route('dashboard.pendaftaran.reservasi.index') }}"
+                        class="flex items-center px-4 py-3 rounded-lg hover:bg-white/20">
                         <i class="mr-3 fas fa-user-plus"></i> Reservasi
                     </a>
                 @endif
@@ -210,6 +215,9 @@
             document.getElementById('profileDropdown').classList.toggle('hidden');
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @stack('scripts')
 
 </body>
 

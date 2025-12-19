@@ -36,7 +36,7 @@
                         <i class="mr-3 fas fa-users-cog"></i> Kelola User
                     </a>
 
-                    <a href="{{ route('dashboard.superadmin.datapasien') }}"
+                    <a href="{{ route('dashboard.superadmin.datapasien.index') }}"
                         class="flex items-center px-4 py-3 rounded-lg hover:bg-white/20">
                         <i class="mr-3 fas fa-user-injured"></i> Data Pasien
                     </a>

@@ -176,6 +176,43 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
         '/dashboard/superadmin/layanan/{layanan}',
         [LayananController::class, 'destroy']
     )->name('dashboard.superadmin.layanan.destroy');
+
+    // ================= DATA PASIEN (SUPER ADMIN) =================
+Route::get(
+        '/dashboard/superadmin/data-pasien',
+        [PatientController::class, 'indexSuperadmin']
+    )->name('dashboard.superadmin.datapasien.index');
+
+    Route::get(
+        '/dashboard/superadmin/data-pasien/create',
+        [PatientController::class, 'create']
+    )->name('dashboard.superadmin.datapasien.create');
+
+    Route::post(
+        '/dashboard/superadmin/data-pasien',
+        [PatientController::class, 'store']
+    )->name('dashboard.superadmin.datapasien.store');
+
+    Route::get(
+        '/dashboard/superadmin/data-pasien/{patient}',
+        [PatientController::class, 'showSuperadmin']
+    )->name('dashboard.superadmin.datapasien.show');
+
+    Route::get(
+        '/dashboard/superadmin/data-pasien/{patient}/edit',
+        [PatientController::class, 'edit']
+    )->name('dashboard.superadmin.datapasien.edit');
+
+    Route::put(
+        '/dashboard/superadmin/data-pasien/{patient}',
+        [PatientController::class, 'update']
+    )->name('dashboard.superadmin.datapasien.update');
+
+    Route::delete(
+        '/dashboard/superadmin/data-pasien/{patient}',
+        [PatientController::class, 'destroy']
+    )->name('dashboard.superadmin.datapasien.destroy');
+
 });
 
 

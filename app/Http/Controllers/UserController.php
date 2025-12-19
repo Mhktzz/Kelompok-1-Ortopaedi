@@ -8,26 +8,20 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    // =========================
     // LIST USER
-    // =========================
     public function kelolauser()
     {
         $users = User::latest()->paginate(10);
         return view('dashboard.superadmin.kelolauser', compact('users'));
     }
 
-    // =========================
     // FORM TAMBAH USER
-    // =========================
     public function create()
     {
         return view('dashboard.superadmin.kelolauser.create');
     }
 
-    // =========================
     // SIMPAN USER BARU
-    // =========================
     public function store(Request $request)
     {
         $request->validate([
@@ -53,25 +47,19 @@ class UserController extends Controller
             ->with('success', 'User berhasil ditambahkan');
     }
 
-    // =========================
     // DETAIL USER
-    // =========================
     public function show(User $user)
     {
     return view('dashboard.superadmin.kelolauser.read', compact('user'));
     }
 
-    // =========================
     // FORM EDIT USER
-    // =========================
     public function edit(User $user)
     {
     return view('dashboard.superadmin.kelolauser.edit', compact('user'));
     }
 
-    // =========================
     // UPDATE USER
-    // =========================
     public function update(Request $request, User $user)
     {
         $request->validate([
@@ -95,9 +83,7 @@ class UserController extends Controller
             ->with('success', 'User berhasil diperbarui');
     }
 
-    // =========================
     // HAPUS USER
-    // =========================
     public function destroy(User $user)
     {
         if ($user->role === 'super_admin') {

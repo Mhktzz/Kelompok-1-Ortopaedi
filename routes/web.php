@@ -12,12 +12,11 @@ use App\Http\Controllers\PerformadokterController;
 use App\Http\Controllers\PerawatController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\RiwayatObatController;
+use App\Http\Controllers\DokterController;
+use App\http\Controllers\PendaftaranController;
+use App\Http\Controllers\ManajemenPasienController; 
+use App\Http\Controllers\StatusKunjunganController;
 
-/*
-|--------------------------------------------------------------------------
-| LANDING & AUTH
-|--------------------------------------------------------------------------
-*/
 Route::get('/', function () {
     return view('landingpage');
 })->name('landing');
@@ -51,18 +50,71 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
             'destroy' => 'dashboard.superadmin.user.destroy',
         ]);
 
-    Route::resource('/dashboard/superadmin/obat', MedicineController::class)
-        ->names([
-            'index' => 'superadmin.obat.index',
-            'create' => 'superadmin.obat.create',
-            'store' => 'superadmin.obat.store',
-            'edit' => 'superadmin.obat.edit',
-            'update' => 'superadmin.obat.update',
-            'destroy' => 'superadmin.obat.destroy',
-        ]);
+    Route::get('/dashboard/superadmin/data-pasien', function () {
+        return view('dashboard.superadmin.datapasien');
+    })->name('dashboard.superadmin.datapasien');
 
-    Route::get('/dashboard/superadmin/obat/stok', [MedicineController::class, 'stok'])
-        ->name('superadmin.obat.stok');
+
+    Route::get(
+        '/dashboard/superadmin/obat',
+        [MedicineController::class, 'index']
+    )->name('superadmin.obat.index');
+
+    Route::get(
+        '/dashboard/superadmin/obat/create',
+        [MedicineController::class, 'create']
+    )->name('superadmin.obat.create');
+
+    Route::post(
+        '/dashboard/superadmin/obat',
+        [MedicineController::class, 'store']
+    )->name('superadmin.obat.store');
+
+    Route::get(
+        '/dashboard/superadmin/obat/{medicine}/edit',
+        [MedicineController::class, 'edit']
+    )->name('superadmin.obat.edit');
+
+    Route::put(
+        '/dashboard/superadmin/obat/{medicine}',
+        [MedicineController::class, 'update']
+    )->name('superadmin.obat.update');
+
+    Route::delete(
+        '/dashboard/superadmin/obat/{medicine}',
+        [MedicineController::class, 'destroy']
+    )->name('superadmin.obat.destroy');
+
+    Route::get(
+        '/dashboard/superadmin/obat/stok',
+        [MedicineController::class, 'stok']
+    )->name('superadmin.obat.stok');
+
+
+    Route::get(
+        '/dashboard/superadmin/master-icd10',
+        [Icd10Controller::class, 'index']
+    )->name('dashboard.superadmin.icd10.index');
+
+    Route::get(
+        '/dashboard/superadmin/master-icd10/create',
+        [Icd10Controller::class, 'create']
+    )->name('dashboard.superadmin.icd10.create');
+
+    Route::post(
+        '/dashboard/superadmin/master-icd10',
+        [Icd10Controller::class, 'store']
+    )->name('dashboard.superadmin.icd10.store');
+
+    Route::get(
+        '/dashboard/superadmin/master-icd10/{icd10}',
+        [Icd10Controller::class, 'show']
+    )->name('dashboard.superadmin.icd10.show');
+
+    Route::get(
+        '/dashboard/superadmin/master-icd10/{icd10}/edit',
+        [Icd10Controller::class, 'edit']
+    )->name('dashboard.superadmin.icd10.edit');
 
     Route::resource('/dashboard/superadmin/master-icd10', Icd10Controller::class)
         ->names('dashboard.superadmin.icd10');
@@ -70,23 +122,72 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
     Route::resource('/dashboard/superadmin/layanan', LayananController::class)
         ->names('dashboard.superadmin.layanan');
 
-    Route::resource('/dashboard/superadmin/data-pasien', PatientController::class)
-        ->names('dashboard.superadmin.datapasien');
+    Route::put(
+        '/dashboard/superadmin/layanan/{layanan}',
+        [LayananController::class, 'update']
+    )->name('dashboard.superadmin.layanan.update');
+
+    Route::delete(
+        '/dashboard/superadmin/layanan/{layanan}',
+        [LayananController::class, 'destroy']
+    )->name('dashboard.superadmin.layanan.destroy');
+
+   
+    Route::get(
+        '/dashboard/superadmin/data-pasien',
+        [PatientController::class, 'indexSuperadmin']
+    )->name('dashboard.superadmin.datapasien.index');
+
+    Route::get(
+        '/dashboard/superadmin/data-pasien/create',
+        [PatientController::class, 'create']
+    )->name('dashboard.superadmin.datapasien.create');
+
+    Route::post(
+        '/dashboard/superadmin/data-pasien',
+        [PatientController::class, 'store']
+    )->name('dashboard.superadmin.datapasien.store');
+
+    Route::get(
+        '/dashboard/superadmin/data-pasien/{patient}',
+        [PatientController::class, 'showSuperadmin']
+    )->name('dashboard.superadmin.datapasien.show');
+
+    Route::get(
+        '/dashboard/superadmin/data-pasien/{patient}/edit',
+        [PatientController::class, 'edit']
+    )->name('dashboard.superadmin.datapasien.edit');
+
+    Route::put(
+        '/dashboard/superadmin/data-pasien/{patient}',
+        [PatientController::class, 'update']
+    )->name('dashboard.superadmin.datapasien.update');
+
+    Route::delete(
+        '/dashboard/superadmin/data-pasien/{patient}',
+        [PatientController::class, 'destroy']
+    )->name('dashboard.superadmin.datapasien.destroy');
+
 });
 
-/*
-|--------------------------------------------------------------------------
-| MANAJER
-|--------------------------------------------------------------------------
-*/
+
 Route::middleware(['auth', 'role:manajer'])->group(function () {
 
     Route::get('/dashboard/manajer', function () {
         return view('dashboard.manajer.index');
     })->name('dashboard.manajer');
 
-    Route::get('/dashboard/manajer/datapasien', [PatientController::class, 'indexManajer'])
-        ->name('dashboard.manajer.datapasien.index');
+    Route::get('/dashboard/manajer/datapasien', [PatientController::class, 'indexManajer'])->name('dashboard.manajer.datapasien.index');
+
+    Route::get(
+        '/dashboard/manajer/datapasien/{patient}',
+        [PatientController::class, 'showManajer']
+    )->name('dashboard.manajer.datapasien.show');
+
+    Route::get(
+        '/dashboard/manajer/layanan',
+        [LayananController::class, 'indexManajer']
+    )->name('dashboard.manajer.layanan.index');
 
     Route::resource('/dashboard/manajer/layanan', LayananController::class)
         ->names('dashboard.manajer.layanan');
@@ -101,11 +202,91 @@ Route::middleware(['auth', 'role:manajer'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:pendaftaran'])->group(function () {
+    Route::get(
+        '/dashboard/pendaftaran/StatusKunjungan/index',
+        [ManajemenPasienController::class, 'index']
+    )->name('dashboard.pendaftaran.StatusKunjungan.index');
 
-    Route::resource(
-        '/dashboard/pendaftaran/reservasi',
-        ReservationController::class
-    )->names('dashboard.pendaftaran.reservasi');
+
+
+    Route::get(
+        '/dashboard/pendaftaran/ManajemenPasien/index',
+        [ManajemenPasienController::class, 'index']
+    )->name('dashboard.pendaftaran.ManajemenPasien.index');
+
+    Route::get(
+        '/dashboard/pendaftaran/ManajemenPasien/create',
+        [ManajemenPasienController::class, 'create']
+    )->name('dashboard.pendaftaran.ManajemenPasien.create');
+
+    Route::post(
+        '/dashboard/pendaftaran/ManajemenPasien',
+        [ManajemenPasienController::class, 'store']
+    )->name('dashboard.pendaftaran.ManajemenPasien.store');
+
+    Route::get(
+        '/dashboard/pendaftaran/ManajemenPasien/edit',
+        [ManajemenPasienController::class, 'edit']
+    )->name('dashboard.pendaftaran.ManajemenPasien.edit');
+
+    Route::put(
+        '/dashboard/pendaftaran/ManajemenPasien/{ManajemenPasien}',
+        [ManajemenPasienController::class, 'update']
+    )->name('dashboard.pendaftaran.ManajemenPasien.update');
+
+    Route::get(
+        '/dashboard/pendaftaran/ManajemenPasien/show',
+        [ManajemenPasienController::class, 'showManajemenPasien']
+    )->name('dashboard.pendaftaran.ManajemenPasien.show');
+
+    Route::delete(
+        '/dashboard/pendaftaran/ManajemenPasien/{ManajemenPasien}',
+        [ManajemenPasienController::class, 'destroy']
+    )->name('dashboard.pendaftaran.ManajemenPasien.destroy');
+    Route::get('dashboard/pendaftaran/ManajemenPasien', [ManajemenPasienController::class, 'index'])
+        ->name('dashboard.pendaftaran.ManajemenPasien');
+
+    
+    Route::get(
+        '/dashboard/pendaftaran/reservasi/index',
+        [ReservationController::class, 'index']
+    )->name('dashboard.pendaftaran.reservasi.index');
+
+    
+    Route::get(
+        '/dashboard/pendaftaran/reservasi/create',
+        [ReservationController::class, 'create']
+    )->name('dashboard.pendaftaran.reservasi.create');
+
+    // STORE
+    Route::post(
+        '/dashboard/pendaftaran/reservasi/store',
+        [ReservationController::class, 'store']
+    )->name('dashboard.pendaftaran.reservasi.store');
+
+    
+    Route::get(
+        '/dashboard/pendaftaran/reservasi/{reservasi}',
+        [ReservationController::class, 'show']
+    )->name('dashboard.pendaftaran.reservasi.view');
+
+    
+    Route::get(
+        '/dashboard/pendaftaran/reservasi/{reservasi}/edit',
+        [ReservationController::class, 'edit']
+    )->name('dashboard.pendaftaran.reservasi.edit');
+
+    
+    Route::put(
+        '/dashboard/pendaftaran/reservasi/{reservasi}',
+        [ReservationController::class, 'update']
+    )->name('dashboard.pendaftaran.reservasi.update');
+
+    
+    Route::delete(
+        '/dashboard/pendaftaran/reservasi/{reservasi}',
+        [ReservationController::class, 'destroy']
+    )->name('dashboard.pendaftaran.reservasi.destroy');
 
     Route::get('/patient', [PatientController::class, 'index'])
         ->name('dashboard.pendaftaran.patient');
@@ -137,9 +318,15 @@ Route::middleware(['auth', 'role:perawat'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:dokter'])->group(function () {
-    Route::get('/dashboard/dokter', function () {
-        return view('dashboard.dokter.index');
-    })->name('dashboard.dokter');
+    Route::get('/dashboard/dokter', [App\Http\Controllers\DokterController::class, 'index'])->name('dashboard.dokter');
+
+    // Antrian dokter
+    Route::get('/dashboard/dokter/antrian', [DokterController::class, 'queue'])->name('dashboard.dokter.queue');
+    Route::post('/dashboard/dokter/antrian/{patient}/panggil', [DokterController::class, 'callPatient'])->name('dashboard.dokter.call');
+
+    // Rekam medis
+    Route::get('/dashboard/dokter/rekam-medis/{id}', [DokterController::class, 'record'])->name('dashboard.dokter.record');
+    Route::post('/dashboard/dokter/rekam-medis/{id}', [DokterController::class, 'storeRecord'])->name('dashboard.dokter.record.store');
 });
 
 /*

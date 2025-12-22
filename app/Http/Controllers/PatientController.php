@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PatientController extends Controller
 {
-    /* =========================
-     |  SUPER ADMIN
-     ========================= */
+    
 
     public function indexSuperadmin()
     {
@@ -21,6 +19,22 @@ class PatientController extends Controller
     public function showSuperadmin(Patient $patient)
     {
         return view('dashboard.superadmin.datapasien.show', compact('patient'));
+    }
+
+   
+    /* =========================
+     |  MANAJER
+     ========================= */
+
+    public function indexManajer()
+    {
+        $patients = Patient::latest()->get();
+        return view('dashboard.manajer.datapasien.index', compact('patients'));
+    }
+
+    public function showManajer(Patient $patient)
+    {
+        return view('dashboard.manajer.datapasien.show', compact('patient'));
     }
 
     /* =========================
@@ -38,9 +52,7 @@ class PatientController extends Controller
         return view('dashboard.pendaftaran.patient.show', compact('patient'));
     }
 
-    /* =========================
-     |  CREATE (SHARED)
-     ========================= */
+   
 
     public function create()
     {
@@ -57,9 +69,7 @@ class PatientController extends Controller
         abort(403);
     }
 
-    /* =========================
-     |  STORE
-     ========================= */
+    
 
     public function store(Request $request)
     {
@@ -96,9 +106,7 @@ class PatientController extends Controller
         abort(403);
     }
 
-    /* =========================
-     |  EDIT
-     ========================= */
+    
 
     public function edit(Patient $patient)
     {
@@ -113,9 +121,7 @@ class PatientController extends Controller
         abort(403);
     }
 
-    /* =========================
-     |  UPDATE
-     ========================= */
+    
 
     public function update(Request $request, Patient $patient)
     {
@@ -135,12 +141,12 @@ class PatientController extends Controller
             'telepon'        => $request->telepon,
         ]);
 
-        return redirect()->back()->with('success', 'Data pasien berhasil diperbarui');
+        return redirect()
+        ->route('dashboard.superadmin.datapasien.index')
+        ->with('success', 'Data pasien berhasil diperbarui');
     }
 
-    /* =========================
-     |  DELETE
-     ========================= */
+    
 
     public function destroy(Patient $patient)
     {

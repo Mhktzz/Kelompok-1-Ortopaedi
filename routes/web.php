@@ -36,6 +36,10 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
         return view('dashboard.superadmin.dashboard');
     })->name('dashboard.superadmin');
 
+    Route::get('/dashboard/superadmin/rekam-medis', function () {
+        return view('dashboard.superadmin.rekammedis');
+    })->name('dashboard.superadmin.rekammedis');
+
     Route::get('/dashboard/superadmin/kelola-user', [UserController::class, 'kelolauser'])
         ->name('dashboard.superadmin.kelolauser');
 
@@ -49,10 +53,6 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
             'update' => 'dashboard.superadmin.user.update',
             'destroy' => 'dashboard.superadmin.user.destroy',
         ]);
-
-    Route::get('/dashboard/superadmin/data-pasien', function () {
-        return view('dashboard.superadmin.datapasien');
-    })->name('dashboard.superadmin.datapasien');
 
 
     Route::get(
@@ -91,7 +91,7 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
     )->name('superadmin.obat.stok');
 
 
-    Route::get(
+   Route::get(
         '/dashboard/superadmin/master-icd10',
         [Icd10Controller::class, 'index']
     )->name('dashboard.superadmin.icd10.index');
@@ -116,11 +116,40 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
         [Icd10Controller::class, 'edit']
     )->name('dashboard.superadmin.icd10.edit');
 
-    Route::resource('/dashboard/superadmin/master-icd10', Icd10Controller::class)
-        ->names('dashboard.superadmin.icd10');
+    Route::put(
+        '/dashboard/superadmin/master-icd10/{icd10}',
+        [Icd10Controller::class, 'update']
+    )->name('dashboard.superadmin.icd10.update');
 
-    Route::resource('/dashboard/superadmin/layanan', LayananController::class)
-        ->names('dashboard.superadmin.layanan');
+    Route::delete(
+        '/dashboard/superadmin/master-icd10/{icd10}',
+        [Icd10Controller::class, 'destroy']
+    )->name('dashboard.superadmin.icd10.destroy');
+
+    Route::get(
+        '/dashboard/superadmin/layanan',
+        [LayananController::class, 'indexSuperadmin']
+    )->name('dashboard.superadmin.layanan.index');
+
+    Route::get(
+        '/dashboard/superadmin/layanan/create',
+        [LayananController::class, 'create']
+    )->name('dashboard.superadmin.layanan.create');
+
+    Route::post(
+        '/dashboard/superadmin/layanan',
+        [LayananController::class, 'store']
+    )->name('dashboard.superadmin.layanan.store');
+
+    Route::get(
+        '/dashboard/superadmin/layanan/{layanan}',
+        [LayananController::class, 'showSuperadmin']
+    )->name('dashboard.superadmin.layanan.show');
+
+    Route::get(
+        '/dashboard/superadmin/layanan/{layanan}/edit',
+        [LayananController::class, 'edit']
+    )->name('dashboard.superadmin.layanan.edit');
 
     Route::put(
         '/dashboard/superadmin/layanan/{layanan}',
@@ -170,6 +199,7 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
 
 });
 
+// MANAGERR
 
 Route::middleware(['auth', 'role:manajer'])->group(function () {
 
@@ -189,9 +219,36 @@ Route::middleware(['auth', 'role:manajer'])->group(function () {
         [LayananController::class, 'indexManajer']
     )->name('dashboard.manajer.layanan.index');
 
-    Route::resource('/dashboard/manajer/layanan', LayananController::class)
-        ->names('dashboard.manajer.layanan');
+    Route::get(
+        '/dashboard/manajer/layanan/create',
+        [LayananController::class, 'create']
+    )->name('dashboard.manajer.layanan.create');
 
+    Route::post(
+        '/dashboard/manajer/layanan',
+        [LayananController::class, 'store']
+    )->name('dashboard.manajer.layanan.store');
+
+    Route::get(
+        '/dashboard/manajer/layanan/{layanan}',
+        [LayananController::class, 'showManajer']
+    )->name('dashboard.manajer.layanan.show');
+
+    Route::get(
+        '/dashboard/manajer/layanan/{layanan}/edit',
+        [LayananController::class, 'edit']
+    )->name('dashboard.manajer.layanan.edit');
+
+
+    Route::put(
+        '/dashboard/manajer/layanan/{layanan}',
+        [LayananController::class, 'update']
+    )->name('dashboard.manajer.layanan.update');
+
+    Route::delete(
+        '/dashboard/manajer/layanan/{layanan}',
+        [LayananController::class, 'destroy']
+    )->name('dashboard.manajer.layanan.destroy');
     Route::get('/dashboard/manajer/performadokter', [PerformadokterController::class, 'index'])
         ->name('dashboard.manajer.performadokter.index');
 });
@@ -203,7 +260,7 @@ Route::middleware(['auth', 'role:manajer'])->group(function () {
 */
 Route::middleware(['auth', 'role:pendaftaran'])->group(function () {
     Route::get(
-        '/dashboard/pendaftaran/StatusKunjungan/index',
+        '/dashboard/pendaftaran/StatusKunjungan/index', 
         [ManajemenPasienController::class, 'index']
     )->name('dashboard.pendaftaran.StatusKunjungan.index');
 

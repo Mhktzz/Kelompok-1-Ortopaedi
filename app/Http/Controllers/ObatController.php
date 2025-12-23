@@ -13,8 +13,10 @@ class ObatController extends Controller
         // ================== DATA TABLE ==================
         $obats = Obat::query()
             ->when($request->search, function ($q) use ($request) {
-                $q->where('nama_obat', 'like', '%' . $request->search . '%')
-                  ->orWhere('kode_obat', 'like', '%' . $request->search . '%');
+                $q->where(function ($qq) use ($request) {
+                    $qq->where('nama_obat', 'like', '%' . $request->search . '%')
+                       ->orWhere('kode_obat', 'like', '%' . $request->search . '%');
+                });
             })
             ->when($request->jenis, function ($q) use ($request) {
                 $q->where('jenis', $request->jenis);
@@ -46,15 +48,23 @@ class ObatController extends Controller
     {
         $request->validate([
             'kode_obat' => 'required|unique:obats,kode_obat',
-            'nama_obat' => 'required',
-            'jenis' => 'required',
-            'satuan' => 'required',
+            'nama_obat' => 'required|string',
+            'jenis' => 'required|string',
+            'satuan' => 'required|string',
             'stok_tersedia' => 'required|integer|min:0',
             'stok_minimum' => 'required|integer|min:0',
             'tanggal_kadaluarsa' => 'required|date',
         ]);
 
-        Obat::create($request->all());
+        Obat::create($request->only([
+            'kode_obat',
+            'nama_obat',
+            'jenis',
+            'satuan',
+            'stok_tersedia',
+            'stok_minimum',
+            'tanggal_kadaluarsa',
+        ]));
 
         return back()->with('success', 'Obat berhasil ditambahkan');
     }
@@ -63,15 +73,23 @@ class ObatController extends Controller
     {
         $request->validate([
             'kode_obat' => 'required|unique:obats,kode_obat,' . $obat->id,
-            'nama_obat' => 'required',
-            'jenis' => 'required',
-            'satuan' => 'required',
+            'nama_obat' => 'required|string',
+            'jenis' => 'required|string',
+            'satuan' => 'required|string',
             'stok_tersedia' => 'required|integer|min:0',
             'stok_minimum' => 'required|integer|min:0',
             'tanggal_kadaluarsa' => 'required|date',
         ]);
 
-        $obat->update($request->all());
+        $obat->update($request->only([
+            'kode_obat',
+            'nama_obat',
+            'jenis',
+            'satuan',
+            'stok_tersedia',
+            'stok_minimum',
+            'tanggal_kadaluarsa',
+        ]));
 
         return back()->with('success', 'Obat berhasil diperbarui');
     }
